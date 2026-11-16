@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>খতিয়ান - বাংলাদেশ ফরম নং ৫৪৬২</title>
+    <!-- বাংলা ফন্টগুলোর জন্য অনলাইন লিংক -->
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600&family=Hind+Siliguri:wght@400;600&family=Tiro+Bangla:ital@0;1&family=Noto+Serif+Bengali:wght@400;600&family=Baloo+Da+2:wght@400;600&family=Mina:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+    <style>
+        /* ফন্ট স্টাইল ক্লাসসমূহ */
+        body.font-solaiman { font-family: 'SolaimanLipi', Arial, sans-serif !important; }
+        body.font-nikosh { font-family: 'Nikosh', 'Hind Siliguri', 'Anek Bangla', sans-serif !important; }
+        body.font-kalpurush { font-family: 'Kalpurush', 'Tiro Bangla', serif !important; }
+        body.font-siyam { font-family: 'Siyam Rupali', 'Hind Siliguri', sans-serif !important; }
+        body.font-anek { font-family: 'Anek Bangla', sans-serif !important; }
+        body.font-SolaimanLipiClassic { font-family: 'SolaimanLipi', 'Tiro Bangla', sans-serif !important; }
+        body.font-noto-serif { font-family: 'Noto Serif Bengali', serif !important; }
+        body.font-hind { font-family: 'Hind Siliguri', sans-serif !important; }
+        body.font-baloo { font-family: 'Baloo Da 2', cursive, sans-serif !important; }
+        body.font-mina { font-family: 'Mina', sans-serif !important; }
+        body.font-adorsho { font-family: 'AdorshoLipi', 'SolaimanLipi', sans-serif !important; }
+        body.font-mukti { font-family: 'Mukti', 'Kalpurush', sans-serif !important; }
+        body.font-sutonnymj { font-family: 'SutonnyMJ', 'SolaimanLipi', sans-serif !important; }
+        body.font-gitanjali { font-family: 'Gitanjali', 'SolaimanLipi', serif !important; }
+        body.font-meghna { font-family: 'Meghna', 'Kalpurush', sans-serif !important; }
+        body.font-rupali { font-family: 'Rupali', 'SolaimanLipi', sans-serif !important; }
+
+        body {
+            font-family: 'SolaimanLipi', Arial, sans-serif;
+            background-color: #555;
+            margin: 0;
+            padding: 5px;
+        }
+
+        /* ওপরের টপ বার এবং বাটনগুলো */
+        .top-bar-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background: #333;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            max-width: 297mm;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .controls button {
+            background: #0b6b3a;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .controls button.save-btn, .controls button.reset-btn {
+            display: none;
+        }
+        body.edit-mode .controls button.edit-trigger-btn {
+            display: none;
+        }
+        body.edit-mode .controls button.save-btn,
+        body.edit-mode .controls button.reset-btn {
+            display: inline-block;
+        }
+        .controls button.reset-btn {
+            background: #d9534f;
+        }
+
+        .font-selector-box select {
+            background: #fff;
+            color: #333;
+            border: none;
+            padding: 6px 10px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .format-toolbar {
+            display: none;
+            gap: 5px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        body.edit-mode .format-toolbar {
+            display: flex;
+        }
+        .format-toolbar button {
+            background: #fff;
+            color: #333;
+            border: none;
+            padding: 5px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .format-toolbar button:hover {
+            background: #ddd;
+        }
+
+
+        /* টেবিলের ঘর নির্বাচন ও মাঝের রেখা সরানোর জন্য */
+        body.edit-mode #khatian-table td.cell-selectable,
+        body.edit-mode #khatian-table th.cell-selectable {
+            cursor: pointer;
+        }
+        body.edit-mode #khatian-table td.cell-selected,
+        body.edit-mode #khatian-table th.cell-selected {
+            outline: 2px solid #007bff;
+            outline-offset: -2px;
+            background-color: #eef6ff !important;
+        }
+        #khatian-table td.no-right-border,
+        #khatian-table th.no-right-border {
+            border-right: none !important;
+        }
+        #khatian-table td.no-left-border,
+        #khatian-table th.no-left-border {
+            border-left: none !important;
+        }
+        .cell-magic-toolbar {
+            display: none;
+            gap: 5px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 5px 0;
+        }
+        body.edit-mode .cell-magic-toolbar {
+            display: flex;
+        }
+        .cell-magic-toolbar button {
+            background: #6f42c1;
+            color: #fff;
+            border: none;
+            padding: 4px 9px;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .cell-magic-toolbar .clear-cell-btn {
+            background: #6c757d;
+        }
+
+        /* মূল খতিয়ান কন্টেইনার (A4 Landscape) */
+        .container {
+            width: 297mm;
+            height: 210mm;
+            max-height: 210mm;
+            background: #fff;
+            margin: 0 auto;
+            padding: 8mm 10mm;
+            box-sizing: border-box;
+            position: relative;
+            border: 1px solid #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            transform-origin: top center;
+        }
+
+        body.edit-mode [contenteditable="true"] {
+            border-bottom: 1.5px dashed #007bff;
+            background-color: #fdfdfe;
+            cursor: text;
+        }
+
+        .form-top-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .khatian-heading {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .location-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        /* টেবিল ডিজাইন */
+        table {
+            width: 100% !important;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 4px;
+            table-layout: fixed;
+        }
+        table, th, td {
+            border: 1px solid #000;
+        }
+        th, td {
+            padding: 3px 2px;
+            text-align: center;
+            vertical-align: top !important; /* লেখা উপর থেকে শুরু হবে */
+            word-wrap: break-word;
+        }
+        th {
+            background-color: #fff;
+            font-weight: bold;
+            vertical-align: middle !important;
+        }
+
+        .action-cell {
+            display: none;
+            width: 35px !important;
+        }
+        body.edit-mode .action-cell {
+            display: table-cell;
+        }
+
+        .table-controls {
+            display: none;
+            margin: 4px 0;
+            text-align: left;
+        }
+        body.edit-mode .table-controls {
+            display: block;
+        }
+        .table-controls button {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .add-row-btn {
+            display: none;
+            margin: 3px 0;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        body.edit-mode .add-row-btn {
+            display: inline-block;
+        }
+        .del-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 2px 4px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 9px;
+        }
+
+        .footer-info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10.5px;
+            margin-top: auto;
+            padding-top: 4px;
+            align-items: center;
+        }
+
+        /* পাসওয়ার্ড মডাল */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 280px;
+        }
+        .modal-box input {
+            width: 85%;
+            padding: 8px;
+            margin: 10px 0;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .modal-box button {
+            padding: 6px 14px;
+            margin: 4px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .btn-submit { background: #28a745; color: white; }
+        .btn-cancel { background: #dc3545; color: white; }
+
+        /* প্রিন্ট বা পিডিএফ করার সময় অটো ল্যান্ডস্কেপ মোড */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            .top-bar-wrapper, .action-cell, .table-controls, .del-btn, .modal-overlay {
+                display: none !important;
+            }
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: 1px solid #000 !important;
+                width: 297mm;
+                height: 210mm;
+                margin: 0;
+                zoom: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-solaiman">
+
+<div class="top-bar-wrapper">
+    <!-- ফন্ট পরিবর্তনের ড্রপডাউন -->
+    <div class="font-selector-box">
+        <select id="fontSelector" onchange="changeGlobalFont(this.value)">
+            <option value="font-solaiman">সলাইমানলিপি</option>
+            <option value="font-nikosh">নিকোষ</option>
+            <option value="font-kalpurush">কালপুরুষ</option>
+            <option value="font-siyam">সিয়াম রূপালী</option>
+            <option value="font-anek">অনেক বাংলা</option>
+            <option value="font-SolaimanLipiClassic">ক্লাসিক বাংলা</option>
+            <option value="font-noto-serif">নোটো সেরিফ</option>
+            <option value="font-hind">হিন্দ সিলিগুড়ি</option>
+            <option value="font-baloo">বালু দা ২</option>
+            <option value="font-mina">মিনা</option>
+            <option value="font-adorsho">আদর্শ লিপি</option>
+            <option value="font-mukti">মুক্তি ফন্ট</option>
+            <option value="font-sutonnymj">সুতর্নিক এমজে</option>
+            <option value="font-gitanjali">গীতাঞ্জলি</option>
+            <option value="font-meghna">মেঘনা</option>
+            <option value="font-rupali">রূপালী</option>
+        </select>
+    </div>
+
+    <!-- টেক্সট ফরম্যাটিং ও জুম টুলবার -->
+    <div class="format-toolbar">
+        <button onclick="formatText('bold')" title="বোল্ড করুন/ছাড়ান"><b>B</b></button>
+        <button onclick="formatText('italic')" title="বাঁকা করুন"><i>I</i></button>
+        <button onclick="formatText('undo')" title="আনডু">↩️</button>
+        <button onclick="changeFontSize('increase')" title="চিহ্নিত লেখা বড়">A+</button>
+        <button onclick="changeFontSize('decrease')" title="চিহ্নিত লেখা ছোট">A-</button>
+        <button onclick="adjustGlobalSize('increase')" title="পুরো পেজ জুম ইন">+</button>
+        <button onclick="adjustGlobalSize('decrease')" title="পুরো পেজ জুম আউট">-</button>
+    </div>
+
+    <div class="controls">
+        <button class="edit-trigger-btn" onclick="openPasswordModal()">🔐 এডিট</button>
+        <button type="button" onclick="magicEdit()">✨ ম্যাজিক এডিট</button>
+        <button class="save-btn" onclick="saveChanges()">💾 সেভ</button>
+        <button class="reset-btn" onclick="resetToDefault()">🔄 রিসেট</button>
+        <button onclick="window.print()">🖨️ প্রিন্ট</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="passwordModal">
+    <div class="modal-box">
+        <h4>অ্যাডমিন পাসওয়ার্ড দিন</h4>
+        <input type="password" id="adminPasswordInput" placeholder="পাসওয়ার্ড (1234)">
+        <br>
+        <button class="btn-submit" onclick="verifyPassword()">প্রবেশ</button>
+        <button class="btn-cancel" onclick="closePasswordModal()">বাতিল</button>
+    </div>
+</div>
+
+<div class="container" id="khatian-container">
+    <div>
+        <div class="form-top-header">
+            <span class="editable-field" contenteditable="false">বাংলাদেশ ফরম নং ৫৪৬২ (সংশোধিত)</span>
+        </div>
+
+        <div class="khatian-heading">
+            <span class="editable-field" contenteditable="false">খতিয়ান নং- ১৫৯৮</span>
+        </div>
+
+        <div class="location-row">
+            <div>বিভাগ: <span class="editable-field" contenteditable="false">ময়মনসিংহ</span></div>
+            <div>জেলা: <span class="editable-field" contenteditable="false">শেরপুর</span></div>
+            <div>উপজেলা/থানা: <span class="editable-field" contenteditable="false">নকলা</span></div>
+            <div>মৌজা: <span class="editable-field" contenteditable="false">জালালপুর</span></div>
+            <div>জে, এল, নং: <span class="editable-field" contenteditable="false">১১</span></div>
+            <div>রেঃ সাঃ নং: <span class="editable-field" contenteditable="false"></span></div>
+        </div>
+
+
+        <div class="cell-magic-toolbar">
+            <button type="button" onclick="removeMiddleLines()">✨ নির্বাচিত ঘরের মাঝের রেখা বাদ দিন</button>
+            <button type="button" class="clear-cell-btn" onclick="clearCellSelection()">✖ নির্বাচন বাতিল</button>
+            <span id="cellSelectionInfo" style="font-size:11px;">কোনো ঘর নির্বাচন করা হয়নি</span>
+        </div>
+        <table id="khatian-table">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="width: 17%;" class="editable-field" contenteditable="false">মালিক, অকৃষি প্রজা বা ইজারাদারের নাম ও ঠিকানা</th>
+                    <th rowspan="2" style="width: 4%;" class="editable-field" contenteditable="false">অংশ</th>
+                    <th rowspan="2" style="width: 4%;" class="editable-field" contenteditable="false">রাজস্ব</th>
+                    <th rowspan="2" style="width: 6%;" class="editable-field" contenteditable="false">দাগ</th>
+                    <th colspan="2" style="width: 9%;" class="editable-field" contenteditable="false">জমির শ্রেণী</th>
+                    <th colspan="2" style="width: 11%;" class="editable-field" contenteditable="false">দাগের মোট পরিমাণ</th>
+                    <th rowspan="2" style="width: 9%;" class="editable-field" contenteditable="false">দাগের মধ্যে অত্র খতিয়ানের অংশ</th>
+                    <th colspan="2" style="width: 11%;" class="editable-field" contenteditable="false">অংশানুযায়ী জমির পরিমাণ</th>
+                    <th rowspan="2" style="width: 21%;" class="editable-field" contenteditable="false">দখল বিষয়ক বা অন্যান্য বিশেষ মন্তব্য</th>
+                    <th rowspan="2" class="action-cell">অ্যাকশন</th>
+                </tr>
+                <tr>
+                    <th style="width: 4.5%;" class="editable-field" contenteditable="false">কৃষি ৫(ক)</th>
+                    <th style="width: 4.5%;" class="editable-field" contenteditable="false">অকৃষি ৫(খ)</th>
+                    <th style="width: 5.5%;" class="editable-field" contenteditable="false">একর ৬(ক)</th>
+                    <th style="width: 5.5%;" class="editable-field" contenteditable="false">শতংশ ৬(খ)</th>
+                    <th style="width: 5.5%;" class="editable-field" contenteditable="false">একর ৮(ক)</th>
+                    <th style="width: 5.5%;" class="editable-field" contenteditable="false">শতংশ ৮(খ)</th>
+                </tr>
+                <tr id="table-num-row">
+                    <th class="editable-field" contenteditable="false">১</th>
+                    <th class="editable-field" contenteditable="false">২</th>
+                    <th class="editable-field" contenteditable="false">৩</th>
+                    <th class="editable-field" contenteditable="false">৪</th>
+                    <th class="editable-field" contenteditable="false">৫(ক)</th>
+                    <th class="editable-field" contenteditable="false">৫(খ)</th>
+                    <th class="editable-field" contenteditable="false">৬(ক)</th>
+                    <th class="editable-field" contenteditable="false">৬(খ)</th>
+                    <th class="editable-field" contenteditable="false">৭</th>
+                    <th class="editable-field" contenteditable="false">৮(ক)</th>
+                    <th class="editable-field" contenteditable="false">৮(খ)</th>
+                    <th class="editable-field" contenteditable="false">৯</th>
+                    <th class="action-cell"></th>
+                </tr>
+            </thead>
+            <tbody id="khatian-tbody">
+                <tr>
+                    <td class="editable-field" contenteditable="false" style="text-align: left; padding-left: 4px;">মো: আপেল মাহমুদ<br>পিং মামুন মিয়া<br>সাং নিজ</td>
+                    <td class="editable-field" contenteditable="false">১</td>
+                    <td class="editable-field" contenteditable="false"></td>
+                    <td class="editable-field" contenteditable="false">১৫৭৮<br>১৫৮০</td>
+                    <td class="editable-field" contenteditable="false">বাড়ী<br>বাড়ী</td>
+                    <td class="editable-field" contenteditable="false"></td>
+                    <td class="editable-field" contenteditable="false">৬৬০০<br>৮৯০০</td>
+                    <td class="editable-field" contenteditable="false">.০৭৬<br>.০৬২</td>
+                    <td class="editable-field" contenteditable="false"></td>
+                    <td class="editable-field" contenteditable="false">৫০০<br>৫০০</td>
+                    <td class="editable-field" contenteditable="false"></td>
+                    <td class="editable-field" contenteditable="false" style="text-align: left;">আগত খতিয়ান:১২৯৩</td>
+                    <td class="action-cell"><button class="del-btn" onclick="deleteRow(this)">ডিলিট</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="add-row-btn" onclick="addRow()">＋ নতুন দাগ যোগ করুন</button>
+    </div>
+
+    <div>
+        <div class="footer-info-row">
+            <div class="editable-field" contenteditable="false">এস এ এন্ড টি অ্যাক্ট, ১৯৫০ এর ১৪৩ ও ১১৬/১৯৭ ধারামতে আদেশ দেওয়া হলো</div>
+            <div class="editable-field" contenteditable="false" style="text-align: center; flex-grow: 1;">পরিবার পরিকল্পনা গ্রহণ করুন</div>
+            <div class="editable-field" contenteditable="false">মোট জমি: <span class="editable-field" contenteditable="false">০</span> | <span class="editable-field" contenteditable="false">১০০০</span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ADMIN_PASSWORD = "1234";
+    const STORAGE_KEY = 'bangla_khatian_form_v2_extended';
+
+    const defaultTemplateHTML = document.getElementById('khatian-container').innerHTML;
+
+    function loadSavedData() {
+        let savedHTML = localStorage.getItem(STORAGE_KEY);
+        if (savedHTML) {
+            document.getElementById('khatian-container').innerHTML = savedHTML;
+        }
+
+        let savedFont = localStorage.getItem('khatian_selected_font_extended');
+        if (savedFont) {
+            let isEditMode = document.body.classList.contains('edit-mode');
+            document.body.className = savedFont;
+            if (isEditMode) {
+                document.body.classList.add('edit-mode');
+            }
+            let selector = document.getElementById('fontSelector');
+            if (selector) selector.value = savedFont;
+        }
+
+        let savedScale = localStorage.getItem('khatian_global_scale');
+        if (savedScale) {
+            document.getElementById('khatian-container').style.zoom = savedScale;
+        }
+        prepareCellSelection();
+    }
+
+    function changeGlobalFont(fontClass) {
+        let isEditMode = document.body.classList.contains('edit-mode');
+        document.body.className = fontClass;
+        if (isEditMode) {
+            document.body.classList.add('edit-mode');
+        }
+        localStorage.setItem('khatian_selected_font_extended', fontClass);
+    }
+
+    function openPasswordModal() {
+        document.getElementById('passwordModal').style.display = 'flex';
+        document.getElementById('adminPasswordInput').value = '';
+    }
+
+    function closePasswordModal() {
+        document.getElementById('passwordModal').style.display = 'none';
+    }
+
+    function getEditablePageElements() {
+        const container = document.getElementById('khatian-container');
+        return container.querySelectorAll(
+            '.editable-field, .location-row > div, .footer-info-row > div, th, td'
+        );
+    }
+
+    function enablePageEditing(showMessage = true) {
+        document.body.classList.add('edit-mode');
+        getEditablePageElements().forEach(el => el.setAttribute('contenteditable', 'true'));
+        prepareCellSelection();
+        if (showMessage) alert("এডিট মোড চালু হয়েছে। লেখা এডিট করতে পারবেন এবং টেবিলের ঘর মার্ক করে মাঝের রেখা সরাতে পারবেন।");
+    }
+
+    function magicEdit() {
+        enablePageEditing(true);
+    }
+
+    function verifyPassword() {
+        let pass = document.getElementById('adminPasswordInput').value;
+        if (pass === ADMIN_PASSWORD) {
+            closePasswordModal();
+            enablePageEditing(true);
+        } else {
+            alert("ভুল পাসওয়ার্ড!");
+        }
+    }
+
+    function formatText(command) {
+        document.execCommand(command, false, null);
+    }
+
+    function changeFontSize(action) {
+        let selection = window.getSelection();
+        if (!selection.rangeCount || selection.isCollapsed) {
+            alert("দয়া করে প্রথমে যে লেখাটি ছোট বা বড় করতে চান তা সিলেক্ট করুন।");
+            return;
+        }
+        
+        let range = selection.getRangeAt(0);
+        let containerElement = range.commonAncestorContainer;
+        if (containerElement.nodeType === 3) { 
+            containerElement = containerElement.parentNode;
+        }
+        
+        let currentSize = parseFloat(window.getComputedStyle(containerElement).fontSize);
+        if (!currentSize || isNaN(currentSize)) currentSize = 10;
+
+        let newSize = currentSize;
+        if (action === 'increase') {
+            newSize += 1.5;
+        } else if (action === 'decrease') {
+            newSize -= 1.5;
+        }
+
+        let span = document.createElement("span");
+        span.style.fontSize = newSize + 'px';
+        let extracted = range.extractContents();
+        span.appendChild(extracted);
+        range.insertNode(span);
+        
+        let newRange = document.createRange();
+        newRange.selectNodeContents(span);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+    }
+
+    function adjustGlobalSize(action) {
+        let container = document.getElementById('khatian-container');
+        let currentZoom = parseFloat(container.style.zoom) || 1;
+        let newZoom = currentZoom;
+
+        if (action === 'increase') {
+            newZoom += 0.05;
+        } else if (action === 'decrease') {
+            newZoom -= 0.05;
+        }
+
+        if (newZoom < 0.7) newZoom = 0.7;
+        if (newZoom > 1.4) newZoom = 1.4;
+
+        container.style.zoom = newZoom;
+        localStorage.setItem('khatian_global_scale', newZoom);
+    }
+
+
+    let selectedCells = [];
+
+    function prepareCellSelection() {
+        const table = document.getElementById('khatian-table');
+        if (!table) return;
+
+        table.querySelectorAll('td, th').forEach(cell => {
+            if (cell.classList.contains('action-cell')) return;
+            cell.classList.add('cell-selectable');
+
+            cell.addEventListener('click', function(e) {
+                if (!document.body.classList.contains('edit-mode')) return;
+                // Keep normal text editing when clicking directly into a cell's text.
+                if (e.target !== this && e.target.closest('button')) return;
+
+                const index = selectedCells.indexOf(this);
+                if (index >= 0) {
+                    selectedCells.splice(index, 1);
+                    this.classList.remove('cell-selected');
+                } else {
+                    selectedCells.push(this);
+                    this.classList.add('cell-selected');
+                }
+                updateCellSelectionInfo();
+            });
+        });
+    }
+
+    function updateCellSelectionInfo() {
+        const info = document.getElementById('cellSelectionInfo');
+        if (info) {
+            info.textContent = selectedCells.length
+                ? selectedCells.length + "টি ঘর নির্বাচিত"
+                : "কোনো ঘর নির্বাচন করা হয়নি";
+        }
+    }
+
+    function clearCellSelection() {
+        selectedCells.forEach(cell => cell.classList.remove('cell-selected'));
+        selectedCells = [];
+        updateCellSelectionInfo();
+    }
+
+    function removeMiddleLines() {
+        if (selectedCells.length < 2) {
+            alert("কমপক্ষে ২টি পাশাপাশি ঘর নির্বাচন করুন।");
+            return;
+        }
+
+        // Only remove borders between selected cells that are horizontally adjacent
+        // in the same table row. Outer borders remain intact.
+        const byRow = new Map();
+        selectedCells.forEach(cell => {
+            const row = cell.parentElement;
+            if (!byRow.has(row)) byRow.set(row, []);
+            byRow.get(row).push(cell);
+        });
+
+        let changed = 0;
+        byRow.forEach(cells => {
+            const ordered = cells.sort((a, b) => a.cellIndex - b.cellIndex);
+            for (let i = 0; i < ordered.length - 1; i++) {
+                const left = ordered[i];
+                const right = ordered[i + 1];
+
+                // Ignore non-adjacent cells; their separating line should remain.
+                if (left.cellIndex + left.colSpan === right.cellIndex) {
+                    left.classList.add('no-right-border');
+                    right.classList.add('no-left-border');
+                    changed++;
+                }
+            }
+        });
+
+        if (!changed) {
+            alert("একই সারির পাশাপাশি ২টি বা তার বেশি ঘর নির্বাচন করুন।");
+            return;
+        }
+
+        clearCellSelection();
+    }
+
+    function restoreCellBorders() {
+        document.querySelectorAll('#khatian-table .no-right-border, #khatian-table .no-left-border')
+            .forEach(cell => cell.classList.remove('no-right-border', 'no-left-border'));
+    }
+
+    function addRow() {
+        let tbody = document.getElementById('khatian-tbody');
+        let newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td class="editable-field" contenteditable="true" style="text-align: left;">নতুন নাম ও ঠিকানা</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true">--</td>
+            <td class="editable-field" contenteditable="true" style="text-align: left;">--</td>
+            <td class="action-cell"><button class="del-btn" onclick="deleteRow(this)">ডিলিট</button></td>
+        `;
+        tbody.appendChild(newRow);
+        if (document.body.classList.contains('edit-mode')) {
+            newRow.querySelectorAll('.editable-field, td, th').forEach(el => {
+                if (!el.classList.contains('action-cell')) el.setAttribute('contenteditable', 'true');
+            });
+        }
+    }
+
+    function deleteRow(btn) {
+        let row = btn.closest('tr');
+        row.remove();
+    }
+
+    function saveChanges() {
+        let container = document.getElementById('khatian-container');
+        getEditablePageElements().forEach(el => el.setAttribute('contenteditable', 'false'));
+
+        localStorage.setItem(STORAGE_KEY, container.innerHTML);
+        clearCellSelection();
+        document.body.classList.remove('edit-mode');
+        alert("সফলভাবে সেভ করা হয়েছে!");
+        loadSavedData();
+    }
+
+    function resetToDefault() {
+        if (confirm("আপনি কি সমস্ত পরিবর্তন মুছে ফেলে আগের অবস্থায় ফিরে যেতে চান?")) {
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem('khatian_selected_font_extended');
+            localStorage.removeItem('khatian_global_scale');
+            document.getElementById('khatian-container').innerHTML = defaultTemplateHTML;
+            document.getElementById('khatian-container').style.zoom = 1;
+            selectedCells = [];
+            document.body.className = 'font-solaiman';
+            document.getElementById('fontSelector').value = 'font-solaiman';
+            alert("রিসেট করা হয়েছে।");
+        }
+    }
+
+    window.onload = function() {
+        document.body.classList.remove("edit-mode");
+        loadSavedData();
+    };
+</script>
+
+</body>
+</html>
